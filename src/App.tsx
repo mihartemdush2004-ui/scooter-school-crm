@@ -16,7 +16,7 @@ const db = {
     if (!res.ok) throw new Error(await res.text());
     return res.json();
   },
-  async insert(data) {
+  async insert(data: { name: any; age: any; parent_phone: any; level: any; total_sessions: any; remaining_sessions: any; notes: never[]; }) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/students`, {
       method: "POST", headers,
       body: JSON.stringify(data),
@@ -26,7 +26,7 @@ const db = {
     const rows = JSON.parse(text);
     return rows[0];
   },
-  async update(id, data) {
+  async update(id: string, data: { remaining_sessions?: number; notes?: any[]; level?: string; }) {
     const res = await fetch(`${SUPABASE_URL}/rest/v1/students?id=eq.${id}`, {
       method: "PATCH", headers,
       body: JSON.stringify(data),
@@ -408,14 +408,13 @@ export default function App() {
         <div style={{ fontSize: 11, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
           THEKIDSCOOTER 
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}> 
           <div style={{ fontSize: 26, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
+            </div>
+            
 
-          <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
-            Школа трюкового<br />самоката 
-          </div>
-           <div style={{ textAlign: "right", paddingTop: 4 }}>
+           <div style={{ textAlign: "right", paddingTop: 4 }}> 
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
             <div style={{ fontSize: 11, color: "#444" }}>учеников</div>
           </div>
@@ -509,4 +508,3 @@ export default function App() {
       )}
     </div>
   );
-&rbrace;
