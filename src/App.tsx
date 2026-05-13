@@ -410,7 +410,7 @@ export default function App() {
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
-            Школа трюкового<br />самоката<br>thekid</br> 
+            Школа трюкового<br />самоката 
           </div>
           <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
