@@ -112,7 +112,7 @@ function Toast({ msg, type }: { msg: string; type: string }) {
   return (
     <div style={{
       position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
-      background: type === "error" ? "#ff4d4d" : "#ffffff",
+      background: type === "error" ? "#ff4d4d" : "#f59506",
       color: "#000", fontWeight: 700, fontSize: 13,
       padding: "10px 20px", borderRadius: 99, zIndex: 200,
       boxShadow: "0 4px 20px #0008", whiteSpace: "nowrap",
@@ -257,7 +257,7 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
         }}>
           <Avatar name={s.name} size={36} />
           <div style={{ flex: 1 }}>
-            <div style={{ color: "#f59506", fontWeight: 600, fontSize: 14 }}>{s.name}</div>
+            <div style={{ color: "#ffffff", fontWeight: 600, fontSize: 14 }}>{s.name}</div>
             <div style={{ fontSize: 11, color: s.remaining <= 2 ? "#ff4d4d" : "#555" }}>
               {s.remaining === 0 ? "❌ Абонемент закончился" : s.remaining <= 2 ? `⚠️ Осталось ${s.remaining}` : `Осталось: ${s.remaining}`}
             </div>
