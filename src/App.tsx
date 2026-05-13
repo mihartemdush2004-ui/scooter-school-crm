@@ -265,7 +265,7 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
           <button onClick={() => onMarkVisit(s)}
             disabled={loadingId === s.id || s.remaining === 0}
             style={{
-              background: s.remaining === 0 ? "#f59506" : "#ffff",
+              background: s.remaining === 0 ? "#ba3514" : "#ffff",
               color: s.remaining === 0 ? "#444" : "#000",
               fontWeight: 800, border: "none", borderRadius: 10,
               padding: "8px 14px", cursor: s.remaining === 0 ? "not-allowed" : "pointer", fontSize: 13,
@@ -277,7 +277,7 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
 }
 
 function AddTab({ onAdd }: any) {
-  const [form, setForm] = useState({ name: "", age: "", phone: "", level: "Начинающий", sessions: "8" });
+  const [form, setForm] = useState({ name: "", age: "", phone: "", level: "kid", sessions: "9" });
   const [saving, setSaving] = useState(false);
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
 
@@ -291,7 +291,7 @@ function AddTab({ onAdd }: any) {
     if (!form.name.trim() || saving) return;
     setSaving(true);
     await onAdd({ name: form.name.trim(), age: +form.age || null, phone: form.phone.trim(), level: form.level, sessions: +form.sessions });
-    setForm({ name: "", age: "", phone: "", level: "Начинающий", sessions: "8" });
+    setForm({ name: "", age: "", phone: "", level: "Начинающий", sessions: "9" });
     setSaving(false);
   };
 
