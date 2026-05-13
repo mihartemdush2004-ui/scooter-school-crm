@@ -50,7 +50,7 @@ function fromDB(s: any) {
   };
 }
 
-const LEVELS = ["Начинающий", "Средний", "Продвинутый"];
+const LEVELS = ["mini", "kid", "kid+"];
 const TABS = ["Ученики", "Сегодня", "Добавить"];
 
 function Avatar({ name, size = 40 }: { name: string; size?: number }) {
@@ -203,7 +203,7 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
           </div>
         </div>
 
-        <div style={{ background: "#181818", borderRadius: 12, padding: 14, marginBottom: 16 }}>
+        <div style={{ background: "#ffff", borderRadius: 12, padding: 14, marginBottom: 16 }}>
           <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>Родитель</div>
           <div style={{ color: "#ccc", fontSize: 14 }}>📞 {student.parentPhone || "—"}</div>
         </div>
@@ -257,7 +257,7 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
         }}>
           <Avatar name={s.name} size={36} />
           <div style={{ flex: 1 }}>
-            <div style={{ color: "#eee", fontWeight: 600, fontSize: 14 }}>{s.name}</div>
+            <div style={{ color: "#f59506", fontWeight: 600, fontSize: 14 }}>{s.name}</div>
             <div style={{ fontSize: 11, color: s.remaining <= 2 ? "#ff4d4d" : "#555" }}>
               {s.remaining === 0 ? "❌ Абонемент закончился" : s.remaining <= 2 ? `⚠️ Осталось ${s.remaining}` : `Осталось: ${s.remaining}`}
             </div>
