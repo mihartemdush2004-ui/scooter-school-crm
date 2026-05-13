@@ -68,17 +68,17 @@ function Avatar({ name, size = 40 }: { name: string; size?: number }) {
 }
 
 function AbonBar({ remaining, total }: { remaining: number; total: number }) {
-  const pct = total > 0 ? remaining / total : 0;
+const pct = total > 0 ? remaining / total : 0;
   const color = pct <= 0.25 ? "#ff4d4d" : pct <= 0.5 ? "#ffaa00" : "#4dff9e";
-  return (
-    <div style={{ marginTop: 6 }}>
-      <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#888", marginBottom: 3 }}>
-        <span>Занятий осталось</span>
-        <span style={{ color, fontWeight: 700 }}>{remaining} / {total}</span>
-      </div>
-      <div style={{ height: 5, borderRadius: 99, background: "#2a2a2a", overflow: "hidden" }}>
-        <div style={{ height: "100%", width: `${pct * 100}%`, background: color, borderRadius: 99, transition: "width .4s" }} />
-      </div>
+return (
+  <div style={{ marginTop: 6 }}>
+     <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#888", marginBottom: 3 }}>
+   <span>Занятий осталось</span>
+    <span style={{ color, fontWeight: 700 }}>{remaining} / {total}</span>
+        </div>
+    <div style={{ height: 5, borderRadius: 99, background: "#2a2a2a", overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${pct * 100}%`, background: color, borderRadius: 99, transition: "width .4s" }} />
+  </div>
     </div>
   );
 }
@@ -265,7 +265,7 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
           <button onClick={() => onMarkVisit(s)}
             disabled={loadingId === s.id || s.remaining === 0}
             style={{
-              background: s.remaining === 0 ? "#1a1a1a" : "#4dff9e",
+              background: s.remaining === 0 ? "#f59506" : "#ffff",
               color: s.remaining === 0 ? "#444" : "#000",
               fontWeight: 800, border: "none", borderRadius: 10,
               padding: "8px 14px", cursor: s.remaining === 0 ? "not-allowed" : "pointer", fontSize: 13,
@@ -398,19 +398,24 @@ export default function App() {
 
   return (
     <div style={{
-      minHeight: "100vh", background: "#0a0a0a", color: "#f0f0f0",
+      minHeight: "100vh", background: "#ffff", color: "#f0f0f0",
       fontFamily: "'Manrope', 'Segoe UI', sans-serif",
       maxWidth: 480, margin: "0 auto", paddingBottom: 80,
     }}>
       {toast && <Toast msg={(toast as any).msg} type={(toast as any).type} />}
 
       <div style={{ padding: "24px 20px 0" }}>
-        <div style={{ fontSize: 11, color: "#4dff9e", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
-          Scoot School
+        <div style={{ fontSize: 11, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
+          THEKIDSCOOTER 
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+<<<<<<< HEAD
+          <div style={{ fontSize: 26, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
+            Школа трюкового<br />самоката 
+=======
           <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
+>>>>>>> aa35c401bdd0e7ad27ffd30fea629cd62c0662b5
           </div>
           <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
@@ -442,7 +447,7 @@ export default function App() {
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="🔍  Поиск ученика..."
+            placeholder="  Поиск ученика..."
             style={{
               width: "100%", background: "#141414", border: "1px solid #222",
               borderRadius: 12, padding: "11px 16px", color: "#f0f0f0", fontSize: 14,
@@ -471,7 +476,7 @@ export default function App() {
           <TodayTab students={students} onMarkVisit={markVisit} loadingId={loadingId} />
         )}
 
-        {tab === "Добавить" && <AddTab onAdd={addStudent} />}
+  {tab === "Добавить" && <AddTab onAdd={addStudent} />}
       </div>
 
       <div style={{
