@@ -84,7 +84,7 @@ function AbonBar({ remaining, total }: { remaining: number; total: number }) {
 }
 
 function Badge({ level }: { level: string }) {
-  const colors: Record<string, string> = { "Начинающий": "#3a7aff", "Средний": "#ffaa00", "Продвинутый": "#4dff9e" };
+  const colors: Record<string, string> = { "mini": "#3a7aff", "kid": "#ffaa00", "kid+": "#4dff9e" };
   return (
     <span style={{
       fontSize: 10, fontWeight: 700, padding: "2px 8px", borderRadius: 99,
@@ -100,7 +100,7 @@ function Spinner() {
     <div style={{ display: "flex", justifyContent: "center", padding: 40 }}>
       <div style={{
         width: 28, height: 28, borderRadius: "50%",
-        border: "3px solid #222", borderTopColor: "#4dff9e",
+        border: "3px solid #222", borderTopColor: "#ffaa00",
         animation: "spin 0.7s linear infinite",
       }} />
       <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
@@ -203,7 +203,7 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
           </div>
         </div>
 
-        <div style={{ background: "#ffff", borderRadius: 12, padding: 14, marginBottom: 16 }}>
+        <div style={{ background: "#ffaa00", borderRadius: 12, padding: 14, marginBottom: 16 }}>
           <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>Родитель</div>
           <div style={{ color: "#ccc", fontSize: 14 }}>📞 {student.parentPhone || "—"}</div>
         </div>
@@ -233,7 +233,7 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
           />
           <button onClick={submitNote} disabled={saving}
             style={{
-              background: "#4dff9e", color: "#000", fontWeight: 800, border: "none",
+              background: "#ffff", color: "#e0860f", fontWeight: 800, border: "none",
               borderRadius: 10, padding: "10px 16px", cursor: "pointer", fontSize: 13,
               opacity: saving ? 0.6 : 1,
             }}>+</button>
@@ -409,8 +409,8 @@ export default function App() {
           Scoot School
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div style={{ fontSize: 26, fontWeight: 900, color: "#fff", lineHeight: 1.1 }}>
-            Школа трюкового<br />самоката 🛴
+          <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
+            Школа трюкового<br />самоката<br>thekid</br> 
           </div>
           <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
