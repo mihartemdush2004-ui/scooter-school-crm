@@ -409,13 +409,11 @@ export default function App() {
           THEKIDSCOOTER 
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-<<<<<<< HEAD
           <div style={{ fontSize: 26, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
 =======
           <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
->>>>>>> aa35c401bdd0e7ad27ffd30fea629cd62c0662b5
           </div>
           <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
