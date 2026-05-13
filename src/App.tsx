@@ -411,11 +411,11 @@ export default function App() {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div style={{ fontSize: 26, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
-=======
+
           <div style={{ fontSize: 26, fontWeight: 900, color: "#ffaa00", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката 
           </div>
-          <div style={{ textAlign: "right", paddingTop: 4 }}>
+           <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
             <div style={{ fontSize: 11, color: "#444" }}>учеников</div>
           </div>
@@ -445,7 +445,7 @@ export default function App() {
           <input
             value={search}
             onChange={e => setSearch(e.target.value)}
-            placeholder="  Поиск ученика..."
+            placeholder="Поиск ученика..."
             style={{
               width: "100%", background: "#141414", border: "1px solid #222",
               borderRadius: 12, padding: "11px 16px", color: "#f0f0f0", fontSize: 14,
@@ -454,8 +454,8 @@ export default function App() {
           />
         </div>
       )}
-
-      <div style={{ padding: "16px 20px 0" }}>
+    
+    <div style={{ padding: "16px 20px 0" }}>
         {loading && <Spinner />}
 
         {!loading && tab === "Ученики" && (
@@ -474,7 +474,7 @@ export default function App() {
           <TodayTab students={students} onMarkVisit={markVisit} loadingId={loadingId} />
         )}
 
-  {tab === "Добавить" && <AddTab onAdd={addStudent} />}
+        {tab === "Добавить" && <AddTab onAdd={addStudent} />}
       </div>
 
       <div style={{
@@ -509,4 +509,4 @@ export default function App() {
       )}
     </div>
   );
-}
+&rbrace;
