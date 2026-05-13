@@ -61,7 +61,7 @@ function Avatar({ name, size = 40 }: { name: string; size?: number }) {
       width: size, height: size, borderRadius: "50%",
       background: `hsl(${hue}, 60%, 55%)`,
       display: "flex", alignItems: "center", justifyContent: "center",
-      color: "#fff", fontWeight: 700, fontSize: size * 0.35,
+      color: "#ffffff", fontWeight: 700, fontSize: size * 0.35,
       flexShrink: 0, letterSpacing: 1,
     }}>{initials}</div>
   );
@@ -69,7 +69,7 @@ function Avatar({ name, size = 40 }: { name: string; size?: number }) {
 
 function AbonBar({ remaining, total }: { remaining: number; total: number }) {
   const pct = total > 0 ? remaining / total : 0;
-  const color = pct <= 0.25 ? "#ff4d4d" : pct <= 0.5 ? "#ffaa00" : "#4dff9e";
+  const color = pct <= 0.25 ? "#f59506" : pct <= 0.5 ? "#f59506" : "#f59506";
   return (
     <div style={{ marginTop: 6 }}>
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "#888", marginBottom: 3 }}>
@@ -112,7 +112,7 @@ function Toast({ msg, type }: { msg: string; type: string }) {
   return (
     <div style={{
       position: "fixed", top: 20, left: "50%", transform: "translateX(-50%)",
-      background: type === "error" ? "#ff4d4d" : "#4dff9e",
+      background: type === "error" ? "#ff4d4d" : "#ffffff",
       color: "#000", fontWeight: 700, fontSize: 13,
       padding: "10px 20px", borderRadius: 99, zIndex: 200,
       boxShadow: "0 4px 20px #0008", whiteSpace: "nowrap",
@@ -149,7 +149,7 @@ function StudentCard({ student, onSelect, onMarkVisit, isLoading }: any) {
           disabled={isLoading || student.remaining === 0}
           style={{
             background: "#1a1a1a", border: "1px solid #333", borderRadius: 10,
-            color: student.remaining === 0 ? "#333" : "#4dff9e",
+            color: student.remaining === 0 ? "#333" : "#f59506",
             fontSize: 18, width: 36, height: 36,
             cursor: (isLoading || student.remaining === 0) ? "not-allowed" : "pointer",
             display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0,
@@ -198,12 +198,12 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
               >
                 {LEVELS.map(l => <option key={l}>{l}</option>)}
               </select>
-              <span style={{ fontSize: 12, color: "#555" }}>{student.age} лет</span>
+              <span style={{ fontSize: 15, color: "#555" }}>{student.age} лет</span>
             </div>
           </div>
         </div>
 
-        <div style={{ background: "#ffaa00", borderRadius: 12, padding: 14, marginBottom: 16 }}>
+        <div style={{ background: "#ffffff", borderRadius: 15, padding: 14, marginBottom: 16 }}>
           <div style={{ fontSize: 12, color: "#666", marginBottom: 4 }}>Родитель</div>
           <div style={{ color: "#ccc", fontSize: 14 }}>📞 {student.parentPhone || "—"}</div>
         </div>
@@ -297,7 +297,7 @@ function AddTab({ onAdd }: any) {
 
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
-      <input style={inputStyle} placeholder="Имя ученика" value={form.name} onChange={e => set("name", e.target.value)} />
+      <input style={inputStyle} placeholder="ФИО Ученика" value={form.name} onChange={e => set("name", e.target.value)} />
       <input style={inputStyle} placeholder="Возраст" type="number" value={form.age} onChange={e => set("age", e.target.value)} />
       <input style={inputStyle} placeholder="Телефон родителя" value={form.phone} onChange={e => set("phone", e.target.value)} />
       <select style={{ ...inputStyle }} value={form.level} onChange={e => set("level", e.target.value)}>
@@ -308,8 +308,8 @@ function AddTab({ onAdd }: any) {
       </select>
       <button onClick={submit} disabled={saving}
         style={{
-          background: "#4dff9e", color: "#000", fontWeight: 800, border: "none",
-          borderRadius: 12, padding: "14px", cursor: "pointer", fontSize: 15, marginTop: 4,
+          background: "#f59506", color: "#ffffff", fontWeight: 800, border: "none",
+          borderRadius: 15, padding: "14px", cursor: "pointer", fontSize: 15, marginTop: 4,
           opacity: saving ? 0.6 : 1,
         }}>{saving ? "Сохраняем…" : "Добавить ученика"}</button>
     </div>
@@ -405,11 +405,11 @@ export default function App() {
       {toast && <Toast msg={(toast as any).msg} type={(toast as any).type} />}
 
       <div style={{ padding: "24px 20px 0" }}>
-        <div style={{ fontSize: 11, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
+        <div style={{ fontSize: 15, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
           THEKIDSCOOTER
         </div>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div style={{ fontSize: 26, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
+          <div style={{ fontSize: 22, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
             Школа трюкового<br />самоката
           </div>
 
