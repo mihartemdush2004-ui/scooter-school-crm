@@ -415,7 +415,7 @@ export default function App() {
 
 
           <div style={{ textAlign: "right", paddingTop: 4 }}>
-            <div style={{ color: "#4dff9e", fontWeight: 900, fontSize: 22 }}>{students.length}</div>
+            <div style={{ color: "#ef8915", fontWeight: 900, fontSize: 20 }}>{students.length}</div>
             <div style={{ fontSize: 11, color: "#444" }}>учеников</div>
           </div>
         </div>
@@ -478,7 +478,7 @@ export default function App() {
 
       <div style={{
         position: "fixed", bottom: 0, left: "50%", transform: "translateX(-50%)",
-        width: "100%", maxWidth: 480, background: "#0f0f0f",
+        width: "100%", maxWidth: 480, background: "#a45423f7",
         borderTop: "1px solid #1e1e1e", display: "flex",
         padding: "10px 0 16px",
       }}>
