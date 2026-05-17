@@ -320,9 +320,10 @@ function TodayTab({ students, onMarkVisit, loadingId }: any) {
 }
 
 function AddTab({ onAdd }: any) {
-  const [form, setForm] = useState({ name: "", age: "", phone: "", level: "kid", sessions: "9" });
+  const [form, setForm] = useState({ name: "", age: "", phone: "", email: "", level: "kid", sessions: "9" });
   const [saving, setSaving] = useState(false);
   const set = (k: string, v: string) => setForm(f => ({ ...f, [k]: v }));
+
 
   const inputStyle = {
     width: "100%", background: "#141414", border: "1px solid #2a2a2a",
@@ -333,8 +334,8 @@ function AddTab({ onAdd }: any) {
   const submit = async () => {
     if (!form.name.trim() || saving) return;
     setSaving(true);
-    await onAdd({ name: form.name.trim(), age: +form.age || null, phone: form.phone.trim(), level: form.level, sessions: +form.sessions });
-    setForm({ name: "", age: "", phone: "", level: "Начинающий", sessions: "9" });
+    await onAdd({ name: form.name.trim(), age: +form.age || null, phone: form.phone.trim(), email: form.email.trim(), level: form.level, sessions: +form.sessions });
+    setForm({ name: "", age: "", phone: "", email"",: level: "Начинающий", sessions: "9" });
     setSaving(false);
   };
 
@@ -343,6 +344,7 @@ function AddTab({ onAdd }: any) {
       <input style={inputStyle} placeholder="ФИО Ученика" value={form.name} onChange={e => set("name", e.target.value)} />
       <input style={inputStyle} placeholder="Возраст" type="number" value={form.age} onChange={e => set("age", e.target.value)} />
       <input style={inputStyle} placeholder="Телефон родителя" value={form.phone} onChange={e => set("phone", e.target.value)} />
+      <input style={inputStyle} placeholder="Email родителя" type="email" value={form.email} onChange={e => set("email", e.target.value)} />
       <select style={{ ...inputStyle }} value={form.level} onChange={e => set("level", e.target.value)}>
         {LEVELS.map(l => <option key={l}>{l}</option>)}
       </select>
@@ -463,10 +465,10 @@ export default function App() {
     }
   };
 
-  const addStudent = async ({ name, age, phone, level, sessions }: any) => {
+  const addStudent = async ({ name, age, phone,email, level, sessions, }: any) => {
     try {
       const row = await db.insert({
-        name, age, parent_phone: phone, level,
+        name, age, parent_phone: phone,parent_email: email, level,
         total_sessions: sessions, remaining_sessions: sessions, notes: [],
       });
       setStudents(ss => [...ss, fromDB(row)]);
