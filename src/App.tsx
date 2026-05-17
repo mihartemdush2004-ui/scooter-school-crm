@@ -189,6 +189,15 @@ function StudentCard({ student, onSelect, onMarkVisit, isLoading }: any) {
 function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
   const [note, setNote] = useState("");
   const [saving, setSaving] = useState(false);
+  const [visits, setVisits] = useState<any[]>([]);
+  const [visitsLoading, setVisitsLoading] = useState(true);
+
+  useEffect(() => {
+  fetch(`${SUPABASE_URL}/rest/v1/visits?student_id=eq.${student.id}&order=visited_at.desc`, { headers })
+    .then(r => r.json())
+    .then(data => setVisits(data))
+    .finally(() => setVisitsLoading(false));
+}, [student.id]);
 
   const submitNote = async () => {
     if (!note.trim() || saving) return;
@@ -234,7 +243,16 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
         </div>
 
         <AbonBar remaining={student.remaining} total={student.total} />
-
+<div style={{ marginTop: 20, marginBottom: 16 }}>
+  <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase", color: "#666", marginBottom: 10 }}>История посещений</div>
+  {visitsLoading && <div style={{ fontSize: 13, color: "#888" }}>Загрузка...</div>}
+  {!visitsLoading && visits.length === 0 && <div style={{ fontSize: 13, color: "#aaa" }}>Посещений пока нет</div>}
+  {visits.map((v: any) => (
+    <div key={v.id} style={{ fontSize: 13, color: "#555", marginBottom: 6 }}>
+      ✓ {new Date(v.visited_at).toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" })}
+    </div>
+  ))}
+</div>
         <div style={{ marginTop: 20 }}>
           <div style={{ fontSize: 13, color: "#666", marginBottom: 10, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>Прогресс</div>
           {student.notes.length === 0 && <div style={{ color: "#444", fontSize: 13 }}>Заметок пока нет</div>}
