@@ -380,7 +380,7 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
   return (
     <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#fff" }}>
       <div style={{ width: 320, padding: 32, border: "1px solid #eee", borderRadius: 16 }}>
-        <h2 style={{ marginBottom: 24, fontSize: 22, fontWeight: 800 }}>Вход в CRM 🛴</h2>
+        <h2 style={{ marginBottom: 24, fontSize: 22, fontWeight: 800 }}>Вход в CRM thekid 🛴</h2>
         <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" style={{ width: "100%", padding: 12, marginBottom: 12, borderRadius: 8, border: "1px solid #ddd", boxSizing: "border-box" as const }} />
         <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Пароль" type="password" style={{ width: "100%", padding: 12, marginBottom: 12, borderRadius: 8, border: "1px solid #ddd", boxSizing: "border-box" as const }} />
         {error && <div style={{ color: "red", fontSize: 13, marginBottom: 12 }}>{error}</div>}
