@@ -335,7 +335,7 @@ function AddTab({ onAdd }: any) {
     if (!form.name.trim() || saving) return;
     setSaving(true);
     await onAdd({ name: form.name.trim(), age: +form.age || null, phone: form.phone.trim(), email: form.email.trim(), level: form.level, sessions: +form.sessions });
-    setForm({ name: "", age: "", phone: "", email"",: level: "Начинающий", sessions: "9" });
+    setForm({ name: "", age: "", phone: "", email:"", level: "Начинающий", sessions: "9" });
     setSaving(false);
   };
 
