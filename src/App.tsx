@@ -57,7 +57,7 @@ async function signIn(email: string, password: string) {
 
 async function getUser(token: string) {
   const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
-    headers: { ...authHeaders, "Authorization": Bearer ${token} },
+    headers: { ...authHeaders, "Authorization": `Bearer ${token}` },
   });
   if (!res.ok) return null;
   return res.json();
