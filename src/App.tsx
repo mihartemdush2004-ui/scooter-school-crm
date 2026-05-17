@@ -385,6 +385,13 @@ export default function App() {
   const [toast, setToast] = useState(null);
   const [dbError, setDbError] = useState(null);
 
+   useEffect(() => {
+    db.getAll()
+      .then((rows: any) => setStudents(rows.map(fromDB)))
+      .catch((e: any) => setDbError(e.message))
+      .finally(() => setLoading(false));
+  }, []);
+
   if (!token) return <LoginScreen onLogin={setToken} />;
 
   const showToast = (msg: string, type = "ok") => {
@@ -392,14 +399,8 @@ export default function App() {
     setTimeout(() => setToast(null), 2500);
   };
 
-  useEffect(() => {
-    db.getAll()
-      .then((rows: any) => setStudents(rows.map(fromDB)))
-      .catch((e: any) => setDbError(e.message))
-      .finally(() => setLoading(false));
-  }, []);
-
-  const markVisit = async (student: any) => {
+  
+    const markVisit = async (student: any) => {
     if (student.remaining <= 0 || loadingId) return;
     setLoadingId(student.id);
     try {
