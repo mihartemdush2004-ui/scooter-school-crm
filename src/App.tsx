@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
@@ -37,6 +38,30 @@ const db = {
   },
 };
 
+// Auth functions
+const authHeaders = {
+  "Content-Type": "application/json",
+  "apikey": SUPABASE_KEY,
+};
+
+async function signIn(email: string, password: string) {
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    method: "POST",
+    headers: authHeaders,
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error_description || "Ошибка входа");
+  return data.access_token;
+}
+
+async function getUser(token: string) {
+  const res = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
+    headers: { ...authHeaders, "Authorization": Bearer ${token} },
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
 function fromDB(s: any) {
   return {
     id: s.id,
@@ -315,8 +340,43 @@ function AddTab({ onAdd }: any) {
     </div>
   );
 }
+function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
+  const handleLogin = async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const token = await signIn(email, password);
+      localStorage.setItem("sb_token", token);
+      onLogin(token);
+    } catch (e: any) {
+      setError(e.message);
+    }
+    setLoading(false);
+  };
+
+  return (
+    <div style={{ minHeight: "100vh", display: "flex", alignItems: "center", justifyContent: "center", background: "#fff" }}>
+      <div style={{ width: 320, padding: 32, border: "1px solid #eee", borderRadius: 16 }}>
+        <h2 style={{ marginBottom: 24, fontSize: 22, fontWeight: 800 }}>Вход в CRM 🛴</h2>
+        <input value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" style={{ width: "100%", padding: 12, marginBottom: 12, borderRadius: 8, border: "1px solid #ddd", boxSizing: "border-box" as const }} />
+        <input value={password} onChange={e => setPassword(e.target.value)} placeholder="Пароль" type="password" style={{ width: "100%", padding: 12, marginBottom: 12, borderRadius: 8, border: "1px solid #ddd", boxSizing: "border-box" as const }} />
+        {error && <div style={{ color: "red", fontSize: 13, marginBottom: 12 }}>{error}</div>}
+        <button onClick={handleLogin} disabled={loading} style={{ width: "100%", padding: 14, background: "#ff6b00", color: "#fff", fontWeight: 800, border: "none", borderRadius: 8, cursor: "pointer", fontSize: 15 }}>
+          {loading ? "Входим..." : "Войти"}
+        </button>
+      </div>
+    </div>
+  );
+}
 export default function App() {
+  const [token, setToken] = useState<string | null>(localStorage.getItem("sb_token"));
+
+if (!token) return <LoginScreen onLogin={setToken} />;  
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState(null);
