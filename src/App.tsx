@@ -375,8 +375,7 @@ function LoginScreen({ onLogin }: { onLogin: (token: string) => void }) {
 }
 export default function App() {
   const [token, setToken] = useState<string | null>(localStorage.getItem("sb_token"));
-
-if (!token) return <LoginScreen onLogin={setToken} />;  
+ 
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [loadingId, setLoadingId] = useState(null);
@@ -385,6 +384,8 @@ if (!token) return <LoginScreen onLogin={setToken} />;
   const [search, setSearch] = useState("");
   const [toast, setToast] = useState(null);
   const [dbError, setDbError] = useState(null);
+
+  if (!token) return <LoginScreen onLogin={setToken} />;
 
   const showToast = (msg: string, type = "ok") => {
     setToast({ msg, type });
@@ -467,14 +468,24 @@ if (!token) return <LoginScreen onLogin={setToken} />;
       <div style={{ padding: "24px 20px 0" }}>
         <div style={{ fontSize: 15, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
           THEKIDSCOOTER
-        </div>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-          <div style={{ fontSize: 22, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
-            Школа трюкового<br />самоката
-          </div>
-
-
-          <div style={{ textAlign: "right", paddingTop: 4 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+  <div style={{ fontSize: 22, fontWeight: 900, color: "#f59506", lineHeight: 1.1 }}>
+    Школа трюкового<br />самоката
+  </div>
+  <button onClick={() => {
+    localStorage.removeItem("sb_token");
+    setToken(null);
+  }} style={{
+    background: "none", border: "1px solid #ddd", borderRadius: 8,
+    padding: "6px 12px", cursor: "pointer", fontSize: 12, color: "#999"
+  }}>
+    Выйти
+  </button>
+</div>
+         
+        
+        
+        <div style={{ textAlign: "right", paddingTop: 4 }}>
             <div style={{ color: "#ef8915", fontWeight: 900, fontSize: 20 }}>{students.length}</div>
             <div style={{ fontSize: 11, color: "#444" }}>учеников</div>
           </div>
