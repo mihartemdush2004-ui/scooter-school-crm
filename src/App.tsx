@@ -405,6 +405,11 @@ export default function App() {
     setLoadingId(student.id);
     try {
       const updated = await db.update(student.id, { remaining_sessions: student.remaining - 1 });
+      await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
+  method: "POST",
+  headers,
+  body: JSON.stringify({ student_id: student.id }),
+});
       const mapped = fromDB(updated);
       setStudents(ss => ss.map(s => s.id === mapped.id ? mapped : s));
       if ((selected as any)?.id === mapped.id) setSelected(mapped);
