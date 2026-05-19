@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { sendSessionsWarning } from "./lib/email"; 
 
 
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
@@ -489,6 +490,17 @@ export default function App() {
       fontFamily: "'Manrope', 'Segoe UI', sans-serif",
       maxWidth: 480, margin: "0 auto", paddingBottom: 80,
     }}>
+    <button
+  onClick={() =>
+    sendSessionsWarning({
+      parent_email: "mihartemdush2004@gmail.com",
+      name: "Артём",
+      remaining_sessions: 2,
+    })
+  }
+>
+  TEST EMAIL
+</button>
       {toast && <Toast msg={(toast as any).msg} type={(toast as any).type} />}
 
       <div style={{ padding: "24px 20px 0" }}>
