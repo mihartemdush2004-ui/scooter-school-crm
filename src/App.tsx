@@ -422,24 +422,67 @@ export default function App() {
 
   
     const markVisit = async (student: any) => {
-    if (student.remaining <= 0 || loadingId) return;
-    setLoadingId(student.id);
-    try {
-      const updated = await db.update(student.id, { remaining_sessions: student.remaining - 1 });
-      await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
-  method: "POST",
-  headers,
-  body: JSON.stringify({ student_id: student.id }),
-});
-      const mapped = fromDB(updated);
-      setStudents(ss => ss.map(s => s.id === mapped.id ? mapped : s));
-      if ((selected as any)?.id === mapped.id) setSelected(mapped);
-      showToast(`✓ Занятие отмечено — осталось ${mapped.remaining}`);
-    } catch {
-      showToast("Ошибка сохранения", "error");
+  if (student.remaining <= 0 || loadingId) return;
+
+  setLoadingId(student.id);
+
+  try {
+    const newRemaining = student.remaining - 1;
+
+    // обновляем remaining_sessions
+    const updated = await db.update(student.id, {
+      remaining_sessions: newRemaining,
+    });
+
+    // записываем посещение
+    await fetch(`${SUPABASE_URL}/rest/v1/visits`, {
+      method: "POST",
+      headers,
+      body: JSON.stringify({
+        student_id: student.id,
+      }),
+    });
+
+    const mapped = fromDB(updated);
+
+    // автоматическая отправка email
+    if (
+      [2, 1, 0].includes(newRemaining) &&
+      student.last_notified_remaining !== newRemaining
+    ) {
+      await sendSessionsWarning({
+        parent_email: student.parent_email,
+        name: student.name,
+        remaining_sessions: newRemaining,
+      });
+
+      // сохраняем последнее уведомление
+      await db.update(student.id, {
+        last_notified_remaining: newRemaining,
+      });
+
+      mapped.last_notified_remaining = newRemaining;
     }
-    setLoadingId(null);
-  };
+
+    // обновляем UI
+    setStudents((ss) =>
+      ss.map((s) => (s.id === mapped.id ? mapped : s))
+    );
+
+    if ((selected as any)?.id === mapped.id) {
+      setSelected(mapped);
+    }
+
+    showToast(`✓ Занятие отмечено — осталось ${mapped.remaining}`);
+
+  } catch (e) {
+    console.error(e);
+
+    showToast("Ошибка сохранения", "error");
+  }
+
+  setLoadingId(null);
+};
 
   const addNote = async (id: string, note: string) => {
     const student = students.find(s => s.id === id);
@@ -490,18 +533,8 @@ export default function App() {
       fontFamily: "'Manrope', 'Segoe UI', sans-serif",
       maxWidth: 480, margin: "0 auto", paddingBottom: 80,
     }}>
-    <button
-  onClick={() =>
-    sendSessionsWarning({
-      parent_email: "mihartemdush2004@gmail.com",
-      name: "Артём",
-      remaining_sessions: 2,
-    })
-  }
->
-  TEST EMAIL
-</button>
-      {toast && <Toast msg={(toast as any).msg} type={(toast as any).type} />}
+    
+    {toast && <Toast msg={(toast as any).msg} type={(toast as any).type} />}
 
       <div style={{ padding: "24px 20px 0" }}>
         <div style={{ fontSize: 15, color: "#0a0a0a", fontWeight: 800, letterSpacing: 3, textTransform: "uppercase", marginBottom: 4 }}>
