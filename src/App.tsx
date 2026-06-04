@@ -425,7 +425,7 @@ export default function App() {
   if (student.remaining <= 0 || loadingId) return;
 
   setLoadingId(student.id);
-
+  
   try {
     const newRemaining = student.remaining - 1;
 
@@ -447,7 +447,7 @@ export default function App() {
 
     // автоматическая отправка email
     if (
-      [2, 1, 0].includes(newRemaining) &&
+      [1, 0].includes(newRemaining) &&
       student.last_notified_remaining !== newRemaining
     ) {
       await sendSessionsWarning({
