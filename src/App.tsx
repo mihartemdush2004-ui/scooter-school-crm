@@ -199,6 +199,19 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
     .then(data => setVisits(data))
     .finally(() => setVisitsLoading(false));
 }, [student.id]);
+ 
+const [progress, setProgress] = useState<any[]>([]);
+const [progressLoading, setProgressLoading] = useState(true);
+
+useEffect(() => {
+  fetch(
+    `${SUPABASE_URL}/rest/v1/progress_notes?student_id=eq.${student.id}&order=created_at.desc`,
+    { headers }
+  )
+    .then(r => r.json())
+    .then(data => setProgress(data))
+    .finally(() => setProgressLoading(false));
+}, [student.id]);
 
   const submitNote = async () => {
     if (!note.trim() || saving) return;
@@ -254,15 +267,58 @@ function StudentDetail({ student, onClose, onAddNote, onLevelChange }: any) {
     </div>
   ))}
 </div>
-        <div style={{ marginTop: 20 }}>
-          <div style={{ fontSize: 13, color: "#666", marginBottom: 10, fontWeight: 600, letterSpacing: 1, textTransform: "uppercase" }}>Прогресс</div>
-          {student.notes.length === 0 && <div style={{ color: "#444", fontSize: 13 }}>Заметок пока нет</div>}
-          {student.notes.map((n: string, i: number) => (
-            <div key={i} style={{ background: "#181818", borderRadius: 10, padding: "10px 14px", marginBottom: 8, fontSize: 13, color: "#bbb" }}>
-              🏅 {n}
-            </div>
-          ))}
-        </div>
+         <div style={{ marginTop: 20 }}>
+  <div
+    style={{
+      fontSize: 13,
+      color: "#666",
+      marginBottom: 10,
+      fontWeight: 600,
+      letterSpacing: 1,
+      textTransform: "uppercase",
+    }}
+  >
+    Прогресс
+  </div>
+
+  {progressLoading && (
+    <div style={{ color: "#666", fontSize: 13 }}>
+      Загрузка...
+    </div>
+  )}
+
+  {!progressLoading && progress.length === 0 && (
+    <div style={{ color: "#444", fontSize: 13 }}>
+      Заметок пока нет
+    </div>
+  )}
+
+  {progress.map((p: any) => (
+    <div
+      key={p.id}
+      style={{
+        background: "#181818",
+        borderRadius: 10,
+        padding: "10px 14px",
+        marginBottom: 8,
+        fontSize: 13,
+        color: "#bbb",
+      }}
+    >
+      <div>🏅 {p.note}</div>
+
+      <div
+        style={{
+          fontSize: 10,
+          color: "#666",
+          marginTop: 4,
+        }}
+      >
+        {new Date(p.created_at).toLocaleDateString("ru-RU")}
+      </div>
+    </div>
+  ))}
+</div>
 
         <div style={{ marginTop: 16, display: "flex", gap: 8 }}>
           <input
