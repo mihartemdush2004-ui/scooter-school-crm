@@ -214,12 +214,25 @@ useEffect(() => {
 }, [student.id]);
 
   const submitNote = async () => {
-    if (!note.trim() || saving) return;
-    setSaving(true);
+  if (!note.trim() || saving) return;
+
+  setSaving(true);
+
+  try {
     await onAddNote(student.id, note.trim());
+
+    const data = await fetch(
+      `${SUPABASE_URL}/rest/v1/progress_notes?student_id=eq.${student.id}&order=created_at.desc`,
+      { headers }
+    ).then(r => r.json());
+
+    setProgress(data);
+
     setNote("");
+  } finally {
     setSaving(false);
-  };
+  }
+};
 
   return (
     <div style={{
@@ -540,19 +553,30 @@ export default function App() {
   setLoadingId(null);
 };
 
-  const addNote = async (id: string, note: string) => {
-    const student = students.find(s => s.id === id);
-    const newNotes = [...(student as any).notes, note];
-    try {
-      const updated = await db.update(id, { notes: newNotes });
-      const mapped = fromDB(updated);
-      setStudents(ss => ss.map(s => s.id === id ? mapped : s));
-      setSelected(mapped);
-      showToast("Заметка сохранена");
-    } catch {
-      showToast("Ошибка сохранения", "error");
+   const addNote = async (id: string, note: string) => {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/progress_notes`,
+      {
+        method: "POST",
+        headers,
+        body: JSON.stringify({
+          student_id: id,
+          note,
+        }),
+      }
+    );
+
+    if (!res.ok) {
+      throw new Error("Ошибка записи");
     }
-  };
+
+    showToast("Заметка сохранена");
+  } catch (e) {
+    console.error(e);
+    showToast("Ошибка сохранения", "error");
+  }
+};
 
   const changeLevel = async (id: string, level: string) => {
     try {
